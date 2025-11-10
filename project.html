@@ -7516,27 +7516,28 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="Table-of-Contents">Table of Contents<a class="anchor-link" href="#Table-of-Contents">¶</a></h1><ol>
-<li><p><a href="#1-introduction">1. Introduction</a></p>
-<ul>
+<h1 id="Table-of-Contents">Table of Contents<a class="anchor-link" href="#Table-of-Contents">¶</a></h1><details open="">
+<summary><strong>📦 Table of Contents</strong></summary>
+<ol>
+<li><a href="#1-introduction">Introduction</a><ul>
 <li><a href="#business-problem">Business Problem</a></li>
 <li><a href="#leakage-policy">Leakage Policy</a></li>
 <li><a href="#data-overview-and-eda">Data Overview and EDA</a></li>
 </ul>
 </li>
-<li><p><a href="#2-machine-learning">2. Machine Learning</a></p>
-<ul>
+<li><a href="#2-machine-learning">Machine Learning</a><ul>
 <li><a href="#data-preparation">Data Preparation</a></li>
 <li><a href="#simple-baseline-logistic-model">Simple Baseline Logistic Model</a></li>
 <li><a href="#random-forest">Random Forest</a></li>
 <li><a href="#gradient-boosting-tree">Gradient Boosting Tree</a></li>
-<li><a href="#best-model">Best Model</a></li>
+<li><a href="#model-recommendation">Model Recommendation</a></li>
 <li><a href="#ablation-table">Ablation Table</a></li>
 </ul>
 </li>
-<li><p><a href="#3-holdout-data">Holdout Data</a></p>
-</li>
+<li><a href="#3-holdout-data">Holdout Data</a></li>
+<li><a href="#4-appendix">Appendix</a></li>
 </ol>
+</details>
 </div>
 </div>
 </div>
@@ -8418,7 +8419,7 @@ OOF Brier : 0.1618
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="Best-model">Best model<a class="anchor-link" href="#Best-model">¶</a></h3>
+<h3 id="Model-Recommendation">Model Recommendation<a class="anchor-link" href="#Model-Recommendation">¶</a></h3>
 </div>
 </div>
 </div>
@@ -8491,11 +8492,11 @@ OOF Brier : 0.1618
 <div class="jp-InputPrompt jp-InputArea-prompt">In [15]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># --- Full model metrics</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># Full model metrics</span>
 <span class="n">oof_full</span> <span class="o">=</span> <span class="n">cross_val_predict</span><span class="p">(</span><span class="n">gbt_pipe</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">'predict_proba'</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span>
 <span class="n">auc_full</span><span class="p">,</span> <span class="n">brier_full</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">oof_full</span><span class="p">),</span> <span class="n">brier_score_loss</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">oof_full</span><span class="p">)</span>
 
-<span class="c1"># --- Groups</span>
+<span class="c1"># Groups</span>
 <span class="n">groups</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">"Demographics"</span><span class="p">:</span> <span class="p">[</span>
         <span class="s2">"gender_Male"</span><span class="p">,</span> <span class="s2">"SeniorCitizen_1"</span><span class="p">,</span> <span class="s2">"Partner_Yes"</span><span class="p">,</span> <span class="s2">"Dependents_Yes"</span>
@@ -8533,14 +8534,14 @@ OOF Brier : 0.1618
     
     <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">name</span><span class="p">,</span> <span class="n">auc</span><span class="p">,</span> <span class="n">brier</span><span class="p">,</span> <span class="n">acc</span><span class="p">])</span>
 
-<span class="c1"># --- Full model metrics</span>
+<span class="c1"># Full model metrics</span>
 <span class="n">oof_full</span> <span class="o">=</span> <span class="n">cross_val_predict</span><span class="p">(</span><span class="n">gbt_pipe</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">'predict_proba'</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span>
 <span class="n">oof_pred_full</span> <span class="o">=</span> <span class="p">(</span><span class="n">oof_full</span> <span class="o">&gt;=</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 <span class="n">auc_full</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">oof_full</span><span class="p">)</span>
 <span class="n">brier_full</span> <span class="o">=</span> <span class="n">brier_score_loss</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">oof_full</span><span class="p">)</span>
 <span class="n">acc_full</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">oof_pred_full</span><span class="p">)</span>
 
-<span class="c1"># --- Make table</span>
+<span class="c1"># Make table</span>
 <span class="n">ablation</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">"Removed_Group"</span><span class="p">,</span><span class="s2">"AUC"</span><span class="p">,</span><span class="s2">"Brier"</span><span class="p">,</span><span class="s2">"Accuracy"</span><span class="p">])</span>
 <span class="n">ablation</span><span class="p">[</span><span class="s2">"Delta AUC"</span><span class="p">]</span> <span class="o">=</span> <span class="n">ablation</span><span class="p">[</span><span class="s2">"AUC"</span><span class="p">]</span> <span class="o">-</span> <span class="n">auc_full</span>            <span class="c1"># AUC no group vs full model </span>
 <span class="n">ablation</span><span class="p">[</span><span class="s2">"Delta Brier"</span><span class="p">]</span> <span class="o">=</span> <span class="n">ablation</span><span class="p">[</span><span class="s2">"Brier"</span><span class="p">]</span> <span class="o">-</span> <span class="n">brier_full</span>
@@ -8702,6 +8703,37 @@ OOF Brier : 0.1618
 <span class="nb">print</span><span class="p">(</span><span class="n">holdout_predicted_df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
 </pre></div>
 </div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h1 id="4.-Appendix">4. Appendix<a class="anchor-link" href="#4.-Appendix">¶</a></h1>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>OpenAI, ChatGPT (GPT-5 Thinking)</p>
+<ul>
+<li>What is the best grouping for my columns, using this a ablation table?</li>
+<li>Help me make an ablation table based on these grouping. Make sure to include AUC, Brier and Accuracy.</li>
+<li>Is there any function that display ROC curve and Calibration of a model?</li>
+<li>Is it ok to use 1 model for ranking, contacting sure to be churners, and use another for probability of churning?</li>
+<li>Does GradientBoostingClassifier have native balancing argument?</li>
+</ul>
+<p>When I was searching for a way to balance the dataset for my GradientBoostingClassifier, ChatGPT and I went back and forth for quite a while trying to find the best solution. It kept suggesting advanced balancing techniques that were either outdated or overly complex, with code spanning 10–15 lines that I didn’t fully understand. Eventually, I decided to take control of the process and suggested trying RandomUnderSampler or SMOTE instead. Once I did that, the workflow became much clearer and more effective.</p>
+<p>For me, the key lesson was to always stay in the driver’s seat when working with AI. ChatGPT can generate sophisticated code, and I'm sure it will be right to an extend, but if I can’t understand what’s happening under the hood, it’s not really helping me learn or potentially improve the model. Choosing a simpler, more transparent approach gave me both confidence and a deeper understanding of how my machine learning model works for this case.</p>
 </div>
 </div>
 </div>
